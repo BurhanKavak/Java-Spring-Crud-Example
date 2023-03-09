@@ -1,4 +1,4 @@
-package com.example.springbootcrud.service.abs;
+package com.example.springbootcrud.service;
 
 import com.example.springbootcrud.model.User;
 

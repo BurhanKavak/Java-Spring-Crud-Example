@@ -3,7 +3,6 @@ package com.example.springbootcrud.service;
 import com.example.springbootcrud.exception.UserNotFoundException;
 import com.example.springbootcrud.model.User;
 import com.example.springbootcrud.repository.UserRepository;
-import com.example.springbootcrud.service.abs.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

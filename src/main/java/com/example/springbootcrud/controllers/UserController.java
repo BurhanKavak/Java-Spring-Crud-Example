@@ -1,7 +1,7 @@
 package com.example.springbootcrud.controllers;
 
 import com.example.springbootcrud.model.User;
-import com.example.springbootcrud.service.abs.UserService;
+import com.example.springbootcrud.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
