@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
             return foundUser;
         } else {
             // Optional ile sardığımız kullanıcıyı mevcut ise güncelle değilse hata fırlat.
-            log.error("User bulunamadı : ", new UserNotFoundException(userId));
+            log.error("User bulunamadı  ");
             throw new UserNotFoundException(userId);
 
 
