@@ -4,28 +4,40 @@ import com.example.springbootcrud.exception.UserNotFoundException;
 import com.example.springbootcrud.model.User;
 import com.example.springbootcrud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Override
     public List<User> getUsers() {
+        log.info("Tüm veriler getirildi");
         return userRepository.findAll();
     }
 
     @Override
     public User getUser(Long userId) {
         //TODO ex. handlending eklenecek.
-        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+//        log.info("{}. Kullanıcı getirildi",userId);
+//        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        boolean id = userRepository.existsById(userId);
+        if (id) {
+            log.info("{}. Kullanıcı getirildi",userId);
+            return userRepository.findById(userId).get();
+        } else {
+            throw new UserNotFoundException(userId);
+        }
 
     }
 
@@ -33,12 +45,13 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         // TODO mail uniqe olması lazım
         //Var olan User eklemeye çalıştığımızda UserNotFoundException'ın diğer constructer'ını kullanalım.
-        // existingUser o anda veritabanında kayıtlı kullanıcı var mı ona bakıyoruz eğer null gelirse işleme devam etmeliyiz.
-        User existingUser = userRepository.findById(user.getId()).orElse(null);
-        if (existingUser == null) {
-            return userRepository.save(user);
+        boolean firstName = userRepository.existsByFirstName(user.getFirstName());
+        boolean lastName = userRepository.existsByLastName(user.getLastName());
+        if (firstName && lastName ) {
+            throw new UserNotFoundException("Bu kullanıcı mevcut!!!");
         } else {
-            throw new UserNotFoundException("%s Bu kullanıcı mevcut!!!",user.getId());
+            log.info("Kullanıcı kaydedildi");
+            return userRepository.save(user);
         }
 
     }
@@ -54,11 +67,11 @@ public class UserServiceImpl implements UserService {
             foundUser.setEmail(newUser.getEmail());
             foundUser.setBirthday(newUser.getBirthday());
             userRepository.save(foundUser);
-            log.info("Log :",foundUser);
+            log.info("Bu kullanıcıya güncelleme yapıldı : ",foundUser);
             return foundUser;
         } else {
             // Optional ile sardığımız kullanıcıyı mevcut ise güncelle değilse hata fırlat.
-           // log.error("Log : ", new UserNotFoundException(userId));
+            log.error("User bulunamadı : ", new UserNotFoundException(userId));
             throw new UserNotFoundException(userId);
 
 
@@ -72,5 +85,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(getUser(userId).getId());
+        log.info("Kullanıcı silindi : ", userId);
     }
 }
