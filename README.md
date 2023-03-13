@@ -200,6 +200,20 @@ http://localhost:8080/swagger-ui.html uzantısı ile swagger-ui'a ulaşabiliriz
 
 
 
+### 🎯 Swagger Not : 
+
+<p><b>Swaggerin bir üst modeli olan 3.Versiyon Swagger Open API kullanmaya başlıyoruz bu projede onun için bir bağımlılığa ihtiyacımız olacak :</b></p>
+
+```xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-ui</artifactId>
+    <version>1.6.4</version>
+</dependency>
+```
+
+
+
 
 
 
