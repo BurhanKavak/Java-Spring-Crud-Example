@@ -2,6 +2,9 @@ package com.example.springbootcrud.controllers;
 
 import com.example.springbootcrud.model.User;
 import com.example.springbootcrud.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@Api(value = "User Rest Api")
 public class UserController {
 
     private final UserService userService;
@@ -20,6 +24,7 @@ public class UserController {
     }
 
     @GetMapping
+    @ApiOperation(value = "User'ın hepsini getirir")
     public ResponseEntity<List<User>> getUsers() {
         List<User> users = userService.getUsers();
         return ResponseEntity.ok(users);
@@ -33,7 +38,8 @@ public class UserController {
 
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    @ApiOperation(value = "Yeni User ekleme metodu", notes = "Bu metodu dikkatli kullan")
+    public ResponseEntity<User> createUser(@ApiParam(value = "Burhan") @Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 

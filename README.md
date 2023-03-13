@@ -56,7 +56,7 @@ Java Spring, loglama için birçok seçenek sunar ve geliştiriciler, uygulaman�
 
 
 
-## :pushpin: Porjemizde logback kullandığımız için spring-web bize yeterli olacaktır :
+## :pushpin: logback bağımlılığı : Porjemizde logback kullandığımız için spring-web bize yeterli olacaktır :
 
 
 ```xml
@@ -67,7 +67,7 @@ Java Spring, loglama için birçok seçenek sunar ve geliştiriciler, uygulaman�
 </dependency>
 ```
 
-## :pushpin: Lazım olan logback-spring.xml dosyamız :
+## :pushpin: Logback Logger için lazım olan logback-spring.xml dosyamız :
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -119,6 +119,84 @@ Java Spring, loglama için birçok seçenek sunar ve geliştiriciler, uygulaman�
     </springProfile>
 </configuration>
 ```
+
+
+## Swagger Nedir?
+
+<b> Spring Swagger, Spring Framework ve Swagger araçlarının birleşimidir. Spring Framework, Java dilinde web uygulamaları geliştirmek için kullanılan açık kaynaklı bir platformdur. Swagger ise RESTful web servisleri için açık kaynaklı bir araçtır ve API'lerin belgelenmesi, test edilmesi ve keşfedilmesi için kullanılır.</b>
+
+<b> Spring Swagger, Spring Framework üzerinde çalışan RESTful web servislerin Swagger aracılığıyla otomatik olarak belgelendirilmesini sağlar. Bu, API'lerin nasıl kullanılacağı, hangi parametrelerin geçirileceği ve hangi sonuçların beklenmesi gerektiği gibi bilgileri açıklayan bir kullanım kılavuzu sağlar.</b>
+
+<b> Spring Swagger, RESTful web servisleri geliştiren ve bu servislerin doğru bir şekilde belgelendirilmesini isteyen geliştiriciler için oldukça kullanışlı bir araçtır. Bu araç, API'lerin belgelendirilmesi sürecini kolaylaştırır ve Swagger sayesinde API'lerin test edilmesi ve keşfedilmesi daha kolay hale gelir.</b><br><br>
+
+
+
+<b> Swagger UI tarafından kullanılabilecek ve RESTful web servislerin belgelendirilmesi için kullanılabilecek bir dizi anotasyona sahiptir. Bu anotasyonlar, Spring Framework üzerinde çalışan web uygulamalarında kullanılabilir ve Swagger belgelerinin oluşturulmasına yardımcı olur. Bazı yaygın Spring Swagger anotasyonları aşağıdaki gibidir:</b>
+
+1. **@Api:** Controller veya Controller sınıfı seviyesinde kullanılır ve API hizmetinin bir parçası olarak belirtilir.
+2. **@ApiOperation:** Bir işlemi belgelemek için kullanılır. Bu anotasyon, işlemin adı, açıklaması, parametreleri, yanıtı ve hata durumlarını tanımlamanıza olanak tanır.
+3. **@ApiParam:** İşlemlerdeki parametreleri belgelemek için kullanılır.
+4. **@ApiResponse:** İşlemlerden birinin yanıtını belgelemek için kullanılır.
+5. **@ApiModel:** Bir veri modelini belgelemek için kullanılır.
+6. **@ApiModelProperty:** Bir veri modelinin özelliklerini belgelemek için kullanılır.
+7. **@ApiIgnore:** Belgeleme için kullanılmayan bir öğeyi işaretlemek için kullanılır. Örneğin, geçici bir değişkeni veya bir test yöntemini belgelemeyebilirsiniz.
+
+<b> Bu anotasyonlar, Spring Swagger ile birlikte kullanılarak RESTful web servislerin belgelenmesini kolaylaştırır ve Swagger UI tarafından kullanılacak bir Swagger belgesi oluşturmanıza olanak tanır.</b>
+
+
+## :pushpin: swagger bağımlılığı : swagger kullanabilmemiz için bu bağımlılığı eklemeliyiz
+
+```xml
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.9.2</version>
+    <scope>compile</scope>
+</dependency>
+```
+<b><p>localhost'da bağlantı yaparken kök uzantısına bu eklentiyi de eklersek (/v2/api-docs)
+bize XML formatında bir çıktı verir onu da swagger editor kısmına yapıştırırsak bu proje özelinde şu şekilde bir çıktı elde ederiz :</b>
+
+![img.png](images/img.png)
+
+
+<b> <p> Bu şekilde uğraşmak yerine yeni bir bağımlılık ekleyerek swagger-ui kısmında direkt istediğimiz modeller ve metodlara ulaşabiliriz </p></b>
+
+## :pushpin: swagger-ui bağımlılığı : swaggeri daha rahat kullanabilmemiz için gereken bağımlılık :
+
+```xml
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.9.2</version>
+</dependency>
+```
+
+http://localhost:8080/swagger-ui.html uzantısı ile swagger-ui'a ulaşabiliriz
+
+![img_1.png](images/img_1.png)
+
+
+
+## Swagger Nasıl kullanılır?
+
+
+### Get ve Post için örnek yapacak olursak yeterli olacaktır :
+
+### GET
+![img_2.png](images/img_2.png)
+
+![img_3.png](images/img_3.png)
+
+![img_4.png](images/img_4.png)
+
+### POST
+
+![img_6.png](images/img_6.png)
+
+![img_7.png](images/img_7.png)
+
+![img_8.png](images/img_8.png)
 
 
 
