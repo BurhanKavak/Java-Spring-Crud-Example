@@ -121,7 +121,7 @@ Java Spring, loglama için birçok seçenek sunar ve geliştiriciler, uygulaman�
 ```
 
 
-## Swagger Nedir?
+## :triangular_flag_on_post: Swagger Nedir?
 
 <b> Spring Swagger, Spring Framework ve Swagger araçlarının birleşimidir. Spring Framework, Java dilinde web uygulamaları geliştirmek için kullanılan açık kaynaklı bir platformdur. Swagger ise RESTful web servisleri için açık kaynaklı bir araçtır ve API'lerin belgelenmesi, test edilmesi ve keşfedilmesi için kullanılır.</b>
 
