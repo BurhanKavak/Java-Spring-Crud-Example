@@ -1,3 +1,9 @@
+## Merhabalar :wave: Bu bir Spring Boot CRUD projesidir. Temelden alınmış ve üst üste konularak ilerlenilen bir projedir. Proje dahilinde kullanılan teknolojilerin konu başlıklarını burada bulabilirsiniz elimden geldiğince açıklamaya çalıştım. <br> <br> <br>
+
+
+
+
+
 # :triangular_flag_on_post: Logger
 
 <b> Java Spring, bir Java tabanlı bir framework'tür ve uygulamaların geliştirilmesi ve yönetilmesi için kullanılır. Bu framework, birçok bileşen içerir ve bunların birçoğu, uygulamanın davranışını izlemek, hataları tespit etmek ve sorunları gidermek için kullanılabilecek bir loglama sistemi ile birlikte gelir.</b>
