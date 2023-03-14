@@ -1,18 +1,21 @@
 package com.example.springbootcrud.service;
 
+import com.example.springbootcrud.dto.request.UserDtoForCreate;
+import com.example.springbootcrud.dto.request.UserDtoForUpdate;
+import com.example.springbootcrud.dto.response.UserDtoResponse;
 import com.example.springbootcrud.model.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> getUsers();
+    List<UserDtoResponse> getUsers();
 
-    User getUser(Long userId);
+    UserDtoResponse getUser(Long userId);
 
-    User createUser(User user);
+    UserDtoForCreate createUser(UserDtoForCreate userDtoForCreate);
 
-    User updateUser(User newUser, Long userId);
+    User updateUser(UserDtoForUpdate userDtoForUpdate, Long userId);
 
     void deleteUser(Long userId);
 

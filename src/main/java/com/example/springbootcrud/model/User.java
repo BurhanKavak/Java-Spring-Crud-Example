@@ -25,19 +25,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @NotNull
-    @Size(max = 12,message = "İsim null olamaz!")
     String firstName;
 
-    @NotBlank(message = "Soyisim boş olamaz!")
     String lastName;
 
-
-    @Email(message = "Geçerli posta giriniz!")
     @Column(unique = true)
     String email;
 
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
     Date birthday;
 
 

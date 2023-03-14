@@ -1,5 +1,8 @@
 package com.example.springbootcrud.controllers;
 
+import com.example.springbootcrud.dto.request.UserDtoForCreate;
+import com.example.springbootcrud.dto.request.UserDtoForUpdate;
+import com.example.springbootcrud.dto.response.UserDtoResponse;
 import com.example.springbootcrud.model.User;
 import com.example.springbootcrud.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -20,26 +23,26 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getUsers();
+    public ResponseEntity<List<UserDtoResponse>> getUsers() {
+        List<UserDtoResponse> users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
-        User user = userService.getUser(userId);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<UserDtoResponse> getUser(@PathVariable("userId") Long userId) {
+        UserDtoResponse userDtoResponse = userService.getUser(userId);
+        return ResponseEntity.ok(userDtoResponse);
     }
 
 
     @PostMapping()
-    public ResponseEntity<User> createUser( @Valid @RequestBody User user) {
-        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+    public ResponseEntity<UserDtoForCreate> createUser(@Valid @RequestBody UserDtoForCreate userDtoForCreate) {
+        return new ResponseEntity<>(userService.createUser(userDtoForCreate), HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@RequestBody User newUser, @PathVariable("userId") Long userId) {
-        return new ResponseEntity<>(userService.updateUser(newUser,userId),HttpStatus.ACCEPTED);
+    public ResponseEntity<User> updateUser(@Valid @RequestBody UserDtoForUpdate userDtoForUpdate, @PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(userService.updateUser(userDtoForUpdate,userId),HttpStatus.ACCEPTED);
     }
 
 
