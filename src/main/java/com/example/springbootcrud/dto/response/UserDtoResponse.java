@@ -1,5 +1,6 @@
 package com.example.springbootcrud.dto.response;
 
+import com.example.springbootcrud.model.Company;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,4 +15,6 @@ public class UserDtoResponse {
     private String firstName;
 
     private String lastName;
+
+    private Long companyId;
 }

@@ -13,7 +13,7 @@ public interface UserService {
 
     UserDtoResponse getUser(Long userId);
 
-    UserDtoForCreate createUser(UserDtoForCreate userDtoForCreate);
+    UserDtoResponse createUser(UserDtoForCreate userDtoForCreate);
 
     User updateUser(UserDtoForUpdate userDtoForUpdate, Long userId);
 

@@ -1,54 +1,55 @@
-package com.example.springbootcrud.service;
+package com.example.springbootcrud.service.impl;
 
 import com.example.springbootcrud.dto.request.UserDtoForCreate;
 import com.example.springbootcrud.dto.request.UserDtoForUpdate;
 import com.example.springbootcrud.dto.response.UserDtoResponse;
+import com.example.springbootcrud.exception.CompanyNotFoundException;
 import com.example.springbootcrud.exception.UserNotFoundException;
+import com.example.springbootcrud.mapper.UserMapper;
+import com.example.springbootcrud.model.Company;
 import com.example.springbootcrud.model.User;
 import com.example.springbootcrud.repository.UserRepository;
+import com.example.springbootcrud.service.CompanyService;
+import com.example.springbootcrud.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final ModelMapper modelMapper;
+    private final CompanyService companyService;
 
-    Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final UserMapper userMapper;
+
 
     @Override
     public List<UserDtoResponse> getUsers() {
         log.info("Tüm veriler getirildi");
         List<User> users = userRepository.findAll();
-        List<UserDtoResponse> userDtoResponseList = users
-                .stream()
-                .map(user -> modelMapper.map(user,UserDtoResponse.class))
-                .collect(Collectors.toList());
+
+        List<UserDtoResponse> userDtoResponseList = userMapper.userToUserDtoResponseList(users);
 
         return userDtoResponseList;
     }
 
     @Override
     public UserDtoResponse getUser(Long userId) {
-        //TODO ex. handlending eklenecek.
 //        log.info("{}. Kullanıcı getirildi",userId);
 //        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         boolean id = userRepository.existsById(userId);
         if (id) {
-            log.info("{}. Kullanıcı getirildi",userId);
+            log.info("{}. Kullanıcı getirildi", userId);
             User user = userRepository.findById(userId).get();
-            UserDtoResponse userDtoResponse = modelMapper.map(user,UserDtoResponse.class);
+            UserDtoResponse userDtoResponse = userMapper.userToUserDtoResponse(user);
             return userDtoResponse;
         } else {
             throw new UserNotFoundException(userId);
@@ -57,31 +58,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDtoForCreate createUser(UserDtoForCreate userDtoForCreate) {
-        // TODO mail uniqe olması lazım
-        //Var olan User eklemeye çalıştığımızda UserNotFoundException'ın diğer constructer'ını kullanalım.
+    public UserDtoResponse createUser(UserDtoForCreate userDtoForCreate) {
+        Company company = companyService.getCompany(userDtoForCreate.getCompanyId());
 
-        User user = modelMapper.map(userDtoForCreate,User.class);
-        boolean firstName = userRepository.existsByFirstName(user.getFirstName());
-        boolean lastName = userRepository.existsByLastName(user.getLastName());
-        if (firstName && lastName ) {
-            throw new UserNotFoundException("Bu kullanıcı mevcut!!!");
+        User user = userMapper.userDtoForCreateToUser(userDtoForCreate);
+        user.setCompany(company);
+        userRepository.save(user);
+
+        UserDtoResponse userDtoResponse = userMapper.userToUserDtoResponse(user);
+
+        if (company == null) {
+            throw new CompanyNotFoundException("Company Bilgisi Girmeniz Gerekmektedir!!!");
         } else {
             log.info("Kullanıcı kaydedildi");
-            return modelMapper.map(userRepository.save(user), UserDtoForCreate.class);
+            return userDtoResponse;
         }
 
     }
 
     @Override
     public User updateUser(UserDtoForUpdate userDtoForUpdate, Long userId) {
-        // TODO Age yerine doğum tarihi yap, LOGLAMA yap
         Optional<User> user = userRepository.findById(userId);
+        Company company = companyService.getCompany(userDtoForUpdate.getCompanyId());
         if (user.isPresent()) {
             User foundUser = user.get();
             foundUser.setEmail(userDtoForUpdate.getEmail());
+            foundUser.setCompany(company);
             userRepository.save(foundUser);
-            log.info("Bu kullanıcıya güncelleme yapıldı : ",foundUser);
+            log.info("Bu kullanıcıya güncelleme yapıldı : ", foundUser);
             return foundUser;
         } else {
             // Optional ile sardığımız kullanıcıyı mevcut ise güncelle değilse hata fırlat.

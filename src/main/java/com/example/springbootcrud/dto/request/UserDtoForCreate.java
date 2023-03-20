@@ -1,6 +1,7 @@
 package com.example.springbootcrud.dto.request;
 
 
+import com.example.springbootcrud.model.Company;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,6 @@ public class UserDtoForCreate {
 
 
     private Date birthday;
+
+    private Long companyId;
 }

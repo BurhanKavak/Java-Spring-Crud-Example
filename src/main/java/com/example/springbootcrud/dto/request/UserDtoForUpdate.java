@@ -13,4 +13,6 @@ public class UserDtoForUpdate {
 
     @Email(message = "Geçerli posta giriniz!")
     private String email;
+
+    private Long companyId;
 }
