@@ -2,6 +2,7 @@ package com.example.springbootcrud.controllers;
 
 import com.example.springbootcrud.dto.request.CompanyDtoForCreate;
 import com.example.springbootcrud.dto.request.CompanyDtoForUpdate;
+import com.example.springbootcrud.dto.response.CompanyDtoResponse;
 import com.example.springbootcrud.model.Company;
 import com.example.springbootcrud.service.CompanyService;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<Company> createCompany(@Valid @RequestBody CompanyDtoForCreate companyDtoForCreate) {
+    public ResponseEntity<CompanyDtoResponse> createCompany(@Valid @RequestBody CompanyDtoForCreate companyDtoForCreate) {
         return new ResponseEntity<>(companyService.createCompany(companyDtoForCreate), HttpStatus.CREATED);
     }
 

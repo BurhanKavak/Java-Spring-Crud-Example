@@ -1,7 +1,6 @@
 package com.example.springbootcrud.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,12 +35,12 @@ public class User {
 
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "company_id",nullable = false)
     Company company;
 
-//    @ManyToOne
-//    @JoinColumn(name = "role_id", nullable = false)
-//    Role role;
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    Role role;
 
 
 }

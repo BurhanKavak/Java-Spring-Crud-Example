@@ -2,6 +2,7 @@ package com.example.springbootcrud.service.impl;
 
 import com.example.springbootcrud.dto.request.CompanyDtoForCreate;
 import com.example.springbootcrud.dto.request.CompanyDtoForUpdate;
+import com.example.springbootcrud.dto.response.CompanyDtoResponse;
 import com.example.springbootcrud.exception.CompanyAlreadyExistException;
 import com.example.springbootcrud.exception.CompanyNotFoundException;
 import com.example.springbootcrud.exception.UserNotFoundException;
@@ -39,17 +40,19 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company createCompany(CompanyDtoForCreate companyDtoForCreate) {
+    public CompanyDtoResponse createCompany(CompanyDtoForCreate companyDtoForCreate) {
 
         Company company = companyMapper.companyDtoForCreateToCompany(companyDtoForCreate);
 
         boolean companyName = companyRepository.existsByCompanyName(company.getCompanyName());
-
+        companyRepository.save(company);
+        CompanyDtoResponse companyDtoResponse = companyMapper.companyToCompanyDtoResponse(company);
         if (companyName) {
             throw new CompanyAlreadyExistException("Bu Şirket Mevcut!!!");
         } else {
             log.info("Company Kaydedildi");
-            return companyRepository.save(company);
+            return companyDtoResponse;
+
         }
 
     }

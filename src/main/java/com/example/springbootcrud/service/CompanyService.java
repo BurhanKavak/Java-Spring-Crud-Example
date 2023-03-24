@@ -2,6 +2,7 @@ package com.example.springbootcrud.service;
 
 import com.example.springbootcrud.dto.request.CompanyDtoForCreate;
 import com.example.springbootcrud.dto.request.CompanyDtoForUpdate;
+import com.example.springbootcrud.dto.response.CompanyDtoResponse;
 import com.example.springbootcrud.model.Company;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface CompanyService {
 
     Company getCompany(Long companyId);
 
-    Company createCompany(CompanyDtoForCreate company);
+    CompanyDtoResponse createCompany(CompanyDtoForCreate company);
 
     Company updateCompany(CompanyDtoForUpdate newCompany, Long companyId);
 

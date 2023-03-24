@@ -15,4 +15,6 @@ public class UserDtoForUpdate {
     private String email;
 
     private Long companyId;
+
+    private Long roleId;
 }

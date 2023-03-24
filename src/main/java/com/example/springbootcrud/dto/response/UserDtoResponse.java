@@ -17,4 +17,5 @@ public class UserDtoResponse {
     private String lastName;
 
     private Long companyId;
+    private Long roleId;
 }

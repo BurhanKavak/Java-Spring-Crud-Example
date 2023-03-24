@@ -16,6 +16,7 @@ public interface UserMapper {
     User userDtoForCreateToUser(UserDtoForCreate userDtoForCreate);
 
     @Mapping(source = "company.id", target = "companyId")
+    @Mapping(source = "role.id",target = "roleId")
     UserDtoResponse userToUserDtoResponse(User user);
     List<UserDtoResponse> userToUserDtoResponseList(List<User> users);
 }

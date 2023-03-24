@@ -31,4 +31,7 @@ public class UserDtoForCreate {
     private Date birthday;
 
     private Long companyId;
+
+    private Long roleId;
+
 }

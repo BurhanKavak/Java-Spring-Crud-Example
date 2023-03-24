@@ -4,12 +4,15 @@ import com.example.springbootcrud.dto.request.UserDtoForCreate;
 import com.example.springbootcrud.dto.request.UserDtoForUpdate;
 import com.example.springbootcrud.dto.response.UserDtoResponse;
 import com.example.springbootcrud.exception.CompanyNotFoundException;
+import com.example.springbootcrud.exception.RoleNotFoundException;
 import com.example.springbootcrud.exception.UserNotFoundException;
 import com.example.springbootcrud.mapper.UserMapper;
 import com.example.springbootcrud.model.Company;
+import com.example.springbootcrud.model.Role;
 import com.example.springbootcrud.model.User;
 import com.example.springbootcrud.repository.UserRepository;
 import com.example.springbootcrud.service.CompanyService;
+import com.example.springbootcrud.service.RoleService;
 import com.example.springbootcrud.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final CompanyService companyService;
+
+    private final RoleService roleService;
 
     private final UserMapper userMapper;
 
@@ -60,16 +65,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDtoResponse createUser(UserDtoForCreate userDtoForCreate) {
         Company company = companyService.getCompany(userDtoForCreate.getCompanyId());
+        Role role = roleService.getRole(userDtoForCreate.getRoleId());
 
         User user = userMapper.userDtoForCreateToUser(userDtoForCreate);
         user.setCompany(company);
+        user.setRole(role);
         userRepository.save(user);
 
         UserDtoResponse userDtoResponse = userMapper.userToUserDtoResponse(user);
 
         if (company == null) {
             throw new CompanyNotFoundException("Company Bilgisi Girmeniz Gerekmektedir!!!");
-        } else {
+        } else if (role == null) {
+            throw new RoleNotFoundException("Role Bilgisi Girmeniz Gerekmektedir!!!");
+        }
+        else {
             log.info("Kullanıcı kaydedildi");
             return userDtoResponse;
         }
@@ -80,10 +90,12 @@ public class UserServiceImpl implements UserService {
     public User updateUser(UserDtoForUpdate userDtoForUpdate, Long userId) {
         Optional<User> user = userRepository.findById(userId);
         Company company = companyService.getCompany(userDtoForUpdate.getCompanyId());
+        Role role = roleService.getRole(userDtoForUpdate.getRoleId());
         if (user.isPresent()) {
             User foundUser = user.get();
             foundUser.setEmail(userDtoForUpdate.getEmail());
             foundUser.setCompany(company);
+            foundUser.setRole(role);
             userRepository.save(foundUser);
             log.info("Bu kullanıcıya güncelleme yapıldı : ", foundUser);
             return foundUser;
