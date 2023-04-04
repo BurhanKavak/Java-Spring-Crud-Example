@@ -1,10 +1,8 @@
 package com.example.springbootcrud.model;
 
 import com.example.springbootcrud.model.enums.RoleEnum;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -26,6 +24,8 @@ public class Role {
     @Enumerated(EnumType.STRING)
     RoleEnum roleName;
 
-//    @OneToMany(mappedBy = "role")
-//    List<User> users;
+    @OneToMany(mappedBy = "role")
+    @ToString.Exclude
+    @JsonIgnore
+    List<User> users;
 }

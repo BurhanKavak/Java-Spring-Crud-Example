@@ -1,10 +1,7 @@
 package com.example.springbootcrud.model;
 
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -28,6 +26,8 @@ public class User {
 
     String lastName;
 
+    String password;
+
     @Column(unique = true)
     String email;
 
@@ -35,11 +35,11 @@ public class User {
 
 
     @ManyToOne
-    @JoinColumn(name = "company_id",nullable = false)
+    @JoinColumn(name = "company_id")
     Company company;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "role_id")
     Role role;
 
 

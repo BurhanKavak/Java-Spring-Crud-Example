@@ -7,6 +7,7 @@ import com.example.springbootcrud.model.Company;
 import com.example.springbootcrud.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +23,7 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    @GetMapping
+    @GetMapping("/test/listCompany")
     public ResponseEntity<List<Company>> getCompanies() {
         List<Company> companies = companyService.getCompanies();
         return ResponseEntity.ok(companies);

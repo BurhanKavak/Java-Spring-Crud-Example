@@ -19,6 +19,10 @@ public interface UserService {
 
     void deleteUser(Long userId);
 
+    User findByFirstName(String firstName);
+
+
+    User createUserToAuth(User user);
 
 
 }

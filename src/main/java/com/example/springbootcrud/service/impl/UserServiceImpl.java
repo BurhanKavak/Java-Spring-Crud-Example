@@ -16,6 +16,7 @@ import com.example.springbootcrud.service.RoleService;
 import com.example.springbootcrud.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,8 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
 
     private final UserMapper userMapper;
+
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -70,6 +73,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.userDtoForCreateToUser(userDtoForCreate);
         user.setCompany(company);
         user.setRole(role);
+        user.setPassword(passwordEncoder.encode(userDtoForCreate.getPassword()));
         userRepository.save(user);
 
         UserDtoResponse userDtoResponse = userMapper.userToUserDtoResponse(user);
@@ -114,4 +118,16 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(getUser(userId).getId());
         log.info("{}. Kullanıcı silindi ", userId);
     }
+
+    @Override
+    public User findByFirstName(String firstName) {
+       return userRepository.findByFirstName(firstName);
+    }
+
+    @Override
+    public User createUserToAuth(User user) {
+        return userRepository.save(user);
+    }
+
+
 }
