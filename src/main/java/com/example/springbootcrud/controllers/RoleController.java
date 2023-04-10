@@ -21,35 +21,30 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping
-    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/getAll")
     public ResponseEntity<List<Role>> getRoles() {
         List<Role> roleList = roleService.getRoles();
         return ResponseEntity.ok(roleList);
     }
 
-    @GetMapping("/{roleId}")
-    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/getByRole/{roleId}")
     public ResponseEntity<Role> getRole(@PathVariable("roleId") Long roleId) {
         Role role = roleService.getRole(roleId);
         return ResponseEntity.ok(role);
     }
 
     @PostMapping
-    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Role> createRole(@RequestBody RoleDtoForCreate roleDtoForCreate) {
         return new ResponseEntity<>(roleService.createRole(roleDtoForCreate), HttpStatus.CREATED);
     }
 
-    @PutMapping("{/roleId}")
-    @SecurityRequirement(name = "bearerAuth")
+    @PutMapping("/{roleId}")
     public ResponseEntity<Role> updateRole(@RequestBody RoleDtoForCreate roleDtoForCreate,@PathVariable("roleId") Long roleId) {
         return new ResponseEntity<>(roleService.updateRole(roleDtoForCreate,roleId),HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("{/roleId}")
-    @SecurityRequirement(name = "bearerAuth")
-    public ResponseEntity<Void> deleteRole (@PathVariable("roleId") Long roleId) {
+    @DeleteMapping("/{roleId}")
+    public ResponseEntity<Void> deleteRole (@RequestParam("roleId") Long roleId) {
         roleService.deleteRole(roleId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

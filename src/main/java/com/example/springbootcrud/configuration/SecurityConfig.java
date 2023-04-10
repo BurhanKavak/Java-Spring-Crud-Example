@@ -89,8 +89,8 @@ public class SecurityConfig {
                 .disable()
                 .authorizeRequests()
                 .antMatchers(environment.getProperty("auth.white-list",String[].class)).permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/users/**").hasAuthority("CUSTOMER")
+                .antMatchers("/companies/**").hasAuthority("MODERATOR")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
