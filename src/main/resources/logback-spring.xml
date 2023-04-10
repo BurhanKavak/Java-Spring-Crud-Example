@@ -38,7 +38,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <root level="error">
+        <root level="info">
             <appender-ref ref="FILEOUT"/>
         </root>
         <logger name="com.example.springbootcrud.service" additivity="false" level="debug">

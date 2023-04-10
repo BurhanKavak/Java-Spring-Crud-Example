@@ -22,7 +22,7 @@ public class JwtTokenProvider {
         Date expireDate = new Date(new Date().getTime() + EXPIRES_IN);
         return Jwts.builder()
                 .setSubject(String.format("%s , %s", userDetails.getId(), userDetails.getFirstName()))
-               // .setSubject(Long.toString(userDetails.getId()))
+                //.setSubject(Long.toString(userDetails.getId()))
                 .claim("roles",new ArrayList<>(userDetails.getAuthorities()))
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
@@ -42,6 +42,10 @@ public class JwtTokenProvider {
 
     Long getUserIdFromJwt(String token) {
         Claims claims = getClaims(token);
+        String[] subjectParts = claims.getSubject().split(",");
+        if (subjectParts.length > 0) {
+            return Long.parseLong(subjectParts[0].trim());
+        }
         return Long.parseLong(claims.getSubject());
     }
 

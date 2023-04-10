@@ -1,37 +1,9 @@
-//package com.example.springbootcrud.configuration;
-//
-//import io.swagger.v3.oas.models.OpenAPI;
-//import io.swagger.v3.oas.models.info.Info;
-//import io.swagger.v3.oas.models.info.License;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-//@Configuration
-//public class OpenAPIConfiguration {
-//
-//
-//    @Bean
-//    public OpenAPI customOpenAPI(@Value("${application-description}") String description,
-//                                @Value("${application-version}") String version) {
-//
-//        return new OpenAPI()
-//                .info(new Info()
-//                        .title("CRUD projesi")
-//                        .version(version)
-//                        .description(description)
-//                        .license(new License().name("Burhan Kavak Open API Licence"))
-//                );
-//
-//    }
-//}
 package com.example.springbootcrud.configuration;
-
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-
-
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +21,11 @@ public class OpenAPIConfiguration {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
+                .info(new Info()
+                        .title("CRUD Projesi")
+                        .version("31.31")
+                        .description("<h2>Open Api Application</h2>")
+                        .license(new License().name("Burhan Kavak Open API License")))
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName,
                                 new SecurityScheme()
