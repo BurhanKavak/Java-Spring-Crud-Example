@@ -218,6 +218,19 @@ http://localhost:8080/swagger-ui.html uzantısı ile swagger-ui'a ulaşabiliriz
 </dependency>
 ```
 
+### 🎯 Yetkilendirme 
+
+
+<b>
+
+| İstekler                          | Yanıt | Yetki               |
+|-----------------------------------|-------|---------------------|
+| <i>User</i> tablosuna istekler    | Evet  | ADMIN,CUSTOMER      |
+| <i>Company</i> tablosuna istekler | Evet  | ADMIN,USER          |
+| <i>Role</i> tablosuna istekler    | Evet  | ADMIN,USER,CUSTOMER |
+
+</b>
+
 
 
 

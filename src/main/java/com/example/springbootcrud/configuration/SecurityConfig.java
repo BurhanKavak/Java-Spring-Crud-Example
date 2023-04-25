@@ -1,6 +1,5 @@
 package com.example.springbootcrud.configuration;
 
-import com.example.springbootcrud.model.enums.RoleEnum;
 import com.example.springbootcrud.security.JwtAuthenticationEntryPoint;
 import com.example.springbootcrud.security.JwtAuthenticationFilter;
 import com.example.springbootcrud.service.impl.UserDetailsServiceImpl;
@@ -8,13 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,9 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -39,12 +30,11 @@ public class SecurityConfig {
 
     private Environment environment;
 
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtAuthenticationEntryPoint handler,Environment environment) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtAuthenticationEntryPoint handler, Environment environment) {
         this.userDetailService = userDetailsService;
         this.handler = handler;
         this.environment = environment;
     }
-
 
 
     @Bean
@@ -88,9 +78,9 @@ public class SecurityConfig {
         httpSecurity.cors().and().csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers(environment.getProperty("auth.white-list",String[].class)).permitAll()
-                .antMatchers("/users/**").hasAuthority("CUSTOMER")
-                .antMatchers("/companies/**").hasAuthority("MODERATOR")
+                .antMatchers(environment.getProperty("auth.white-list", String[].class)).permitAll()
+                .antMatchers("/users/**").hasAnyAuthority("CUSTOMER", "ADMIN")
+                .antMatchers("/companies/**").hasAnyAuthority("MODERATOR", "ADMIN")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

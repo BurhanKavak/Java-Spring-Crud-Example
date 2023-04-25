@@ -78,15 +78,10 @@ public class UserServiceImpl implements UserService {
 
         UserDtoResponse userDtoResponse = userMapper.userToUserDtoResponse(user);
 
-        if (company == null) {
-            throw new CompanyNotFoundException("Company Bilgisi Girmeniz Gerekmektedir!!!");
-        } else if (role == null) {
-            throw new RoleNotFoundException("Role Bilgisi Girmeniz Gerekmektedir!!!");
-        }
-        else {
-            log.info("Kullanıcı kaydedildi");
-            return userDtoResponse;
-        }
+
+        log.info("Kullanıcı kaydedildi");
+        return userDtoResponse;
+
 
     }
 
@@ -121,7 +116,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByFirstName(String firstName) {
-       return userRepository.findByFirstName(firstName);
+        return userRepository.findByFirstName(firstName);
     }
 
     @Override

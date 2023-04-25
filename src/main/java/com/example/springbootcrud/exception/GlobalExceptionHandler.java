@@ -2,6 +2,7 @@ package com.example.springbootcrud.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,14 @@ public class GlobalExceptionHandler {
     public @ResponseBody ErrorResponse userAlreadyExist (CompanyAlreadyExistException ex){
         return new ErrorResponse(
                 HttpStatus.ALREADY_REPORTED.value(), ex.getMessage()
+        );
+
+    }
+
+    @ExceptionHandler(CompanyNotFoundException.class)
+    public @ResponseBody ErrorResponse companyNotFound (CompanyNotFoundException ex){
+        return new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(), ex.getMessage()
         );
 
     }
